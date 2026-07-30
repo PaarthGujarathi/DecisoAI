@@ -75,7 +75,7 @@ export const navigation: NavItem[] = [
   },
   {
     id: "simulator",
-    label: "Decision Simulator",
+    label: "Decision Intelligence",
     description:
       "Evaluate business scenarios and compare strategies before execution.",
     icon: FlaskConical,
