@@ -2,7 +2,7 @@ import { FormEvent, useState } from "react";
 import { analyzeDecision } from "../../services/decisionApi";
 import type { DecisionResponse } from "../../services/decisionApi";
 
-function UploadPage() {
+function AIAdvisor() {
   const [question, setQuestion] = useState("");
   const [context, setContext] = useState("");
   const [constraints, setConstraints] = useState("");
@@ -173,4 +173,4 @@ function UploadPage() {
   );
 }
 
-export default UploadPage;
+export default AIAdvisor;
