@@ -1,89 +1,101 @@
-import clsx from "clsx";
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { motion } from "framer-motion";
+
 import { navigation } from "../../config/navigation";
 
-function Sidebar() {
-  return (
-    <aside className="fixed left-6 top-6 bottom-6 w-72 rounded-3xl border border-slate-200 bg-white shadow-xl">
-      {/* Logo */}
-      <div className="border-b border-slate-100 px-8 py-8">
-        <h1 className="text-3xl font-bold tracking-tight text-blue-600">
-          DecisioAI
-        </h1>
+export default function Sidebar() {
+  const [collapsed, setCollapsed] = useState(false);
 
-        <p className="mt-2 text-sm text-slate-500">
-          AI Business Intelligence
-        </p>
+  return (
+    <motion.aside
+      animate={{
+        width: collapsed ? 88 : 270,
+      }}
+      transition={{
+        duration: 0.25,
+      }}
+      className="border-r border-slate-200 bg-white flex flex-col shadow-sm"
+    >
+      {/* Logo */}
+
+      <div className="flex h-20 items-center justify-between px-6 border-b border-slate-200">
+        {!collapsed && (
+          <div>
+            <h1 className="text-xl font-bold text-slate-900">
+              DecisioAI
+            </h1>
+
+            <p className="text-xs text-slate-500">
+              Business Intelligence
+            </p>
+          </div>
+        )}
+
+        <button
+          onClick={() => setCollapsed(!collapsed)}
+          className="rounded-lg border border-slate-200 p-2 transition hover:bg-slate-100"
+        >
+          {collapsed ? (
+            <ChevronRight size={18} />
+          ) : (
+            <ChevronLeft size={18} />
+          )}
+        </button>
       </div>
 
       {/* Navigation */}
-      <nav className="flex flex-1 flex-col gap-2 p-5">
-        {navigation.map((item) => {
-          const Icon = item.icon;
 
-          return (
-            <NavLink
-              key={item.id}
-              to={item.path}
-              className={({ isActive }) =>
-                clsx(
-                  "group flex items-center gap-4 rounded-2xl px-5 py-4 transition-all duration-300",
-                  isActive
-                    ? "bg-blue-600 text-white shadow-lg"
-                    : "text-slate-600 hover:bg-slate-100"
-                )
-              }
-            >
-              {({ isActive }) => (
-                <>
-                  <div
-                    className={clsx(
-                      "flex h-11 w-11 items-center justify-center rounded-xl transition-all duration-300",
-                      isActive
-                        ? "bg-white/20"
-                        : "bg-slate-100 group-hover:bg-white"
-                    )}
-                  >
-                    <Icon size={22} />
-                  </div>
+      <nav className="flex-1 px-3 py-5 space-y-2">
+        {navigation.map((item) => (
+          <NavLink
+            key={item.id}
+            to={item.path}
+            className={({ isActive }) =>
+              `group flex items-center gap-3 rounded-xl px-4 py-3 transition-all duration-200
 
-                  <div className="flex flex-col">
-                    <span className="font-semibold">
-                      {item.label}
-                    </span>
+              ${
+                isActive
+                  ? "bg-blue-600 text-white shadow-lg"
+                  : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+              }`
+            }
+          >
+            <item.icon size={22} />
 
-                    <span
-                      className={clsx(
-                        "text-xs",
-                        isActive
-                          ? "text-blue-100"
-                          : "text-slate-400"
-                      )}
-                    >
-                      {item.description}
-                    </span>
-                  </div>
-                </>
-              )}
-            </NavLink>
-          );
-        })}
+            {!collapsed && (
+              <div>
+                <p className="font-medium">{item.label}</p>
+
+                <p className="text-xs opacity-70">
+                  {item.description}
+                </p>
+              </div>
+            )}
+          </NavLink>
+        ))}
       </nav>
 
       {/* Footer */}
-      <div className="border-t border-slate-100 p-6">
-        <div className="rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-500 p-5 text-white">
-          <p className="text-sm font-semibold">
-            DecisioAI v1.0
-          </p>
 
-          <p className="mt-1 text-xs text-blue-100">
-            Business Intelligence Platform
-          </p>
-        </div>
+      <div className="border-t border-slate-200 p-4">
+        {!collapsed ? (
+          <div>
+            <p className="text-sm font-semibold text-slate-800">
+              DecisioAI
+            </p>
+
+            <p className="text-xs text-slate-500">
+              Version 1.0
+            </p>
+          </div>
+        ) : (
+          <div className="flex justify-center">
+            <div className="h-3 w-3 rounded-full bg-emerald-500" />
+          </div>
+        )}
       </div>
-    </aside>
+    </motion.aside>
   );
 }
-
-export default Sidebar;

@@ -16,21 +16,21 @@ import SimulatorPage from "../pages/Simulator/SimulatorPage";
 import ReportsPage from "../pages/Reports/ReportsPage";
 import SettingsPage from "../pages/Settings/SettingsPage";
 
-function AppRouter() {
+export default function AppRouter() {
   return (
     <BrowserRouter>
       <Routes>
         {/* Landing */}
         <Route element={<LandingLayout />}>
-          <Route path="/" element={<HomePage />} />
+          <Route index path="/" element={<HomePage />} />
         </Route>
 
-        {/* Workspace Hub */}
+        {/* Workspace */}
         <Route element={<WorkspaceLayout />}>
           <Route path="/workspace" element={<WorkspacePage />} />
         </Route>
 
-        {/* Main Application */}
+        {/* Application */}
         <Route path="/app" element={<AppLayout />}>
           <Route index element={<Navigate to="dashboard" replace />} />
 
@@ -44,11 +44,9 @@ function AppRouter() {
           <Route path="settings" element={<SettingsPage />} />
         </Route>
 
-        {/* Fallback */}
+        {/* 404 */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );
 }
-
-export default AppRouter;

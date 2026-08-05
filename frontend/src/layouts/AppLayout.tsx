@@ -1,24 +1,32 @@
 import { Outlet } from "react-router-dom";
+import { motion } from "framer-motion";
 
-import Header from "../components/layout/Header";
 import Sidebar from "../components/layout/Sidebar";
+import Header from "../components/layout/Header";
 
-function AppLayout() {
+export default function AppLayout() {
   return (
-    <div className="min-h-screen bg-slate-100">
+    <div className="flex h-screen bg-slate-50 overflow-hidden">
       <Sidebar />
 
-      <div className="ml-80 flex min-h-screen flex-1 flex-col">
+      <div className="flex flex-1 flex-col overflow-hidden">
         <Header />
 
-        <main className="flex-1 px-8 pb-8 pt-6">
-          <div className="min-h-[calc(100vh-120px)] rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+        <motion.main
+          key={location.pathname}
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: 0.35,
+            ease: "easeOut",
+          }}
+          className="flex-1 overflow-y-auto p-8"
+        >
+          <div className="mx-auto max-w-7xl">
             <Outlet />
           </div>
-        </main>
+        </motion.main>
       </div>
     </div>
   );
 }
-
-export default AppLayout;
