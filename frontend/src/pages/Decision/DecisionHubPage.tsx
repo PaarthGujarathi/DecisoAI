@@ -33,18 +33,18 @@ export default function DecisionHubPage() {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
-        className="rounded-3xl border border-slate-200/80 bg-white p-8 shadow-2xs"
+        className="rounded-2xl border border-[#252529] bg-[#111214] p-8 shadow-2xs"
       >
-        <div className="flex items-center gap-2 text-xs font-semibold text-blue-600">
+        <div className="flex items-center gap-2 text-xs font-semibold text-[#FF3B30]">
           <Sparkles size={16} />
           <span>DecisioAI Decision Intelligence</span>
         </div>
 
-        <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+        <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-[#F5F5F5] sm:text-4xl">
           Turn strategy into confident action
         </h1>
 
-        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-slate-500">
+        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[#9A9A9A]">
           Explore scenario simulations or leverage generative AI guidance to make data-backed high-stakes business decisions.
         </p>
       </motion.section>
@@ -63,29 +63,29 @@ export default function DecisionHubPage() {
             >
               <Link
                 to={card.ctaTo}
-                className="group relative flex h-full flex-col justify-between rounded-3xl border border-slate-200/90 bg-white p-8 shadow-2xs transition-all duration-200 hover:-translate-y-1 hover:border-blue-400/80 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="group relative flex h-full flex-col justify-between rounded-2xl border border-[#252529] bg-[#111214] p-8 shadow-2xs transition-all duration-200 hover:-translate-y-1 hover:border-[#E63946]/50 focus:outline-none focus:ring-2 focus:ring-red-500"
               >
                 <div>
                   <div className="flex items-center justify-between">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-600 border border-blue-100">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#2A1215] text-[#FF3B30] border border-[#E63946]/30">
                       <Icon size={24} />
                     </div>
 
-                    <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
+                    <span className="rounded-full bg-[#17181B] border border-[#252529] px-3 py-1 text-xs font-medium text-slate-300">
                       {card.badge}
                     </span>
                   </div>
 
-                  <h2 className="mt-6 text-2xl font-bold tracking-tight text-slate-900 transition-colors group-hover:text-blue-600">
+                  <h2 className="mt-6 text-2xl font-bold tracking-tight text-[#F5F5F5] transition-colors group-hover:text-[#FF3B30]">
                     {card.title}
                   </h2>
 
-                  <p className="mt-3 text-sm leading-relaxed text-slate-500">
+                  <p className="mt-3 text-sm leading-relaxed text-[#9A9A9A]">
                     {card.description}
                   </p>
                 </div>
 
-                <div className="mt-8 flex items-center gap-2 border-t border-slate-100 pt-5 text-sm font-semibold text-blue-600">
+                <div className="mt-8 flex items-center gap-2 border-t border-[#252529] pt-5 text-sm font-semibold text-[#FF3B30]">
                   <span>{card.ctaLabel}</span>
                   <ArrowRight
                     size={16}

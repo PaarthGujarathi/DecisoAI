@@ -108,17 +108,17 @@ export default function WorkspaceLauncher() {
         filter: isLaunching ? "blur(6px)" : "blur(0px)",
       }}
       transition={{ duration: 0.22, ease: "easeInOut" }}
-      className="relative flex min-h-screen flex-col justify-between overflow-hidden bg-slate-50/80 font-sans text-slate-900 select-none"
+      className="relative flex min-h-screen flex-col justify-between overflow-hidden bg-[#080808] font-sans text-[#F5F5F5] select-none"
     >
       {/* Background Subtle Mesh & Ambient Lighting */}
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(239,246,255,0.8),_transparent_65%),radial-gradient(ellipse_at_bottom_right,_rgba(241,245,249,0.9),_transparent_70%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(230,57,70,0.12),_transparent_65%),radial-gradient(ellipse_at_bottom_right,_rgba(23,24,27,0.9),_transparent_70%)]" />
 
       {/* Top Navbar Header */}
-      <header className="relative z-20 flex h-20 items-center justify-between px-8 md:px-12">
+      <header className="relative z-20 flex h-20 items-center justify-between px-8 md:px-12 border-b border-[#252529]/60">
         <div className="flex items-center gap-4">
           <Link
             to="/"
-            className="group flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200/80 bg-white/90 text-slate-600 shadow-2xs transition hover:border-slate-300 hover:bg-white hover:text-slate-900"
+            className="group flex h-10 w-10 items-center justify-center rounded-xl border border-[#252529] bg-[#111214] text-[#9A9A9A] shadow-2xs transition hover:border-slate-700 hover:bg-[#17181B] hover:text-[#F5F5F5]"
             title="Return to Landing Page"
             aria-label="Return to Landing Page"
           >
@@ -129,14 +129,14 @@ export default function WorkspaceLauncher() {
           </Link>
 
           <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600 font-bold text-white shadow-xs">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#E63946] font-bold text-white shadow-xs">
               D
             </div>
             <div>
-              <span className="text-base font-extrabold tracking-tight text-slate-900">
+              <span className="text-base font-extrabold tracking-tight text-[#F5F5F5]">
                 DecisioAI
               </span>
-              <span className="ml-2.5 rounded-full border border-blue-200/80 bg-blue-50/80 px-2.5 py-0.5 text-[11px] font-semibold text-blue-700">
+              <span className="ml-2.5 rounded-full border border-[#E63946]/30 bg-[#2A1215] px-2.5 py-0.5 text-[11px] font-semibold text-[#FF3B30]">
                 Workspace Launcher
               </span>
             </div>
@@ -144,13 +144,13 @@ export default function WorkspaceLauncher() {
         </div>
 
         {/* Shortcut Hint */}
-        <div className="hidden items-center gap-2 text-xs text-slate-500 md:flex">
-          <span className="flex items-center gap-1 rounded-md border border-slate-200 bg-white px-2 py-1 font-mono text-[11px] text-slate-600 shadow-2xs">
+        <div className="hidden items-center gap-2 text-xs text-[#9A9A9A] md:flex">
+          <span className="flex items-center gap-1 rounded-md border border-[#252529] bg-[#111214] px-2 py-1 font-mono text-[11px] text-[#F5F5F5] shadow-2xs">
             <Command size={12} /> ↑ ↓
           </span>
           <span>hover or use keys to navigate</span>
-          <span className="mx-1 text-slate-300">•</span>
-          <span className="flex items-center gap-1 rounded-md border border-slate-200 bg-white px-2 py-1 font-mono text-[11px] text-slate-600 shadow-2xs">
+          <span className="mx-1 text-[#252529]">•</span>
+          <span className="flex items-center gap-1 rounded-md border border-[#252529] bg-[#111214] px-2 py-1 font-mono text-[11px] text-[#F5F5F5] shadow-2xs">
             Enter
           </span>
           <span>to launch</span>
@@ -164,11 +164,11 @@ export default function WorkspaceLauncher() {
           {/* Left Column: Interactive Module Selection List */}
           <div className="space-y-3 lg:col-span-6 xl:col-span-6">
             <div className="mb-4">
-              <div className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-blue-600">
+              <div className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-[#FF3B30]">
                 <Compass size={14} />
                 <span>Select Destination</span>
               </div>
-              <h1 className="mt-1 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+              <h1 className="mt-1 text-3xl font-extrabold tracking-tight text-[#F5F5F5] sm:text-4xl">
                 Choose your workspace
               </h1>
             </div>
@@ -188,7 +188,7 @@ export default function WorkspaceLauncher() {
                     animate={{
                       x: isFocused ? 14 : 0,
                       scale: isFocused ? 1.02 : 0.985,
-                      opacity: isFocused ? 1 : 0.45,
+                      opacity: isFocused ? 1 : 0.4,
                     }}
                     transition={{
                       type: "spring",
@@ -203,10 +203,10 @@ export default function WorkspaceLauncher() {
                         e.preventDefault();
                         handleLaunch(item.path);
                       }}
-                      className={`group relative flex items-center justify-between rounded-2xl p-4 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                      className={`group relative flex items-center justify-between rounded-2xl p-4 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 ${
                         isFocused
-                          ? `border ${itemTheme.launcherBorder} ${itemTheme.launcherItemBg} bg-white shadow-xl ${itemTheme.launcherShadow}`
-                          : "border border-transparent bg-transparent hover:border-slate-200/60 hover:bg-white/40"
+                          ? `border ${itemTheme.launcherBorder} ${itemTheme.launcherItemBg} bg-[#111214] shadow-xl ${itemTheme.launcherShadow}`
+                          : "border border-transparent bg-transparent hover:border-[#252529] hover:bg-[#111214]/40"
                       }`}
                       aria-selected={isFocused}
                     >
@@ -227,7 +227,7 @@ export default function WorkspaceLauncher() {
                         {/* Number Index */}
                         <span
                           className={`font-mono text-xs font-bold transition-colors ${
-                            isFocused ? itemTheme.navIconActive : "text-slate-400"
+                            isFocused ? itemTheme.navIconActive : "text-slate-600"
                           }`}
                         >
                           0{index + 1}
@@ -241,7 +241,7 @@ export default function WorkspaceLauncher() {
                           className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-all ${
                             isFocused
                               ? itemTheme.launcherIconBg
-                              : "bg-slate-200/70 text-slate-500 group-hover:bg-slate-300/80 group-hover:text-slate-700"
+                              : "bg-[#17181B] text-slate-500 group-hover:bg-[#252529] group-hover:text-slate-300"
                           }`}
                         >
                           <Icon size={20} />
@@ -251,7 +251,7 @@ export default function WorkspaceLauncher() {
                         <div>
                           <h3
                             className={`text-lg font-bold transition-colors ${
-                              isFocused ? "text-slate-900" : "text-slate-600"
+                              isFocused ? "text-[#F5F5F5]" : "text-slate-400"
                             }`}
                           >
                             {item.label}
@@ -261,7 +261,7 @@ export default function WorkspaceLauncher() {
                               initial={{ opacity: 0, height: 0 }}
                               animate={{ opacity: 1, height: "auto" }}
                               exit={{ opacity: 0, height: 0 }}
-                              className="mt-0.5 text-xs text-slate-500 line-clamp-1"
+                              className="mt-0.5 text-xs text-[#9A9A9A] line-clamp-1"
                             >
                               {item.description}
                             </motion.p>
@@ -295,7 +295,7 @@ export default function WorkspaceLauncher() {
                 animate={{ opacity: 1, x: 0, scale: 1 }}
                 exit={{ opacity: 0, x: -24, scale: 0.97 }}
                 transition={{ duration: 0.22, ease: "easeOut" }}
-                className="relative overflow-hidden rounded-3xl border border-slate-200/90 bg-white p-8 shadow-2xl shadow-slate-900/5"
+                className="relative overflow-hidden rounded-3xl border border-[#252529] bg-[#111214] p-8 shadow-2xl shadow-black/80"
               >
                 {/* Decorative Accent Header Line */}
                 <div className={`absolute left-0 top-0 h-1.5 w-full ${activeTheme.navIndicator}`} />
@@ -308,7 +308,7 @@ export default function WorkspaceLauncher() {
                       Module 0{focusedIndex + 1} of 08
                     </span>
 
-                    <span className="font-mono text-xs font-bold text-slate-400">
+                    <span className="font-mono text-xs font-bold text-slate-600">
                       {activeItem.id.toUpperCase()}
                     </span>
                   </div>
@@ -323,7 +323,7 @@ export default function WorkspaceLauncher() {
                     </div>
 
                     <div>
-                      <h2 className="text-3xl font-extrabold tracking-tight text-slate-900">
+                      <h2 className="text-3xl font-extrabold tracking-tight text-[#F5F5F5]">
                         {activeItem.label}
                       </h2>
                       <p className={`mt-1 text-xs font-medium ${activeTheme.navIconActive}`}>
@@ -333,13 +333,13 @@ export default function WorkspaceLauncher() {
                   </div>
 
                   {/* Comprehensive Description */}
-                  <p className="mt-6 text-sm leading-relaxed text-slate-600">
+                  <p className="mt-6 text-sm leading-relaxed text-[#9A9A9A]">
                     {activeItem.description}
                   </p>
 
                   {/* Module Capabilities List */}
-                  <div className="mt-8 space-y-3 border-t border-slate-100 pt-6">
-                    <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                  <div className="mt-8 space-y-3 border-t border-[#252529] pt-6">
+                    <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
                       Key Capabilities
                     </span>
 
@@ -353,7 +353,7 @@ export default function WorkspaceLauncher() {
                       ).map((capability, idx) => (
                         <div
                           key={idx}
-                          className="flex items-center gap-3 text-xs text-slate-700"
+                          className="flex items-center gap-3 text-xs text-[#F5F5F5]"
                         >
                           <CheckCircle2
                             size={16}
@@ -366,7 +366,7 @@ export default function WorkspaceLauncher() {
                   </div>
 
                   {/* Launch CTA Trigger Button */}
-                  <div className="mt-10 border-t border-slate-100 pt-6">
+                  <div className="mt-10 border-t border-[#252529] pt-6">
                     <button
                       onClick={() => handleLaunch(activeItem.path)}
                       className={`group flex w-full items-center justify-between rounded-2xl px-6 py-4 font-semibold text-white transition-all duration-200 hover:shadow-lg ${activeTheme.launcherButtonBg} ${activeTheme.launcherButtonHover}`}
@@ -389,12 +389,11 @@ export default function WorkspaceLauncher() {
         </div>
       </main>
 
-
       {/* Bottom Footer Status Bar */}
-      <footer className="relative z-20 flex h-14 items-center justify-between border-t border-slate-200/60 px-8 text-xs text-slate-400 md:px-12">
+      <footer className="relative z-20 flex h-14 items-center justify-between border-t border-[#252529]/60 px-8 text-xs text-slate-500 md:px-12">
         <div className="flex items-center gap-3">
           <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-          <span className="font-medium text-slate-600">DecisioAI Platform Ready</span>
+          <span className="font-medium text-slate-400">DecisioAI Platform Ready</span>
         </div>
 
         <div>

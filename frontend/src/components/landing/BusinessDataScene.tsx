@@ -2,13 +2,14 @@ import { useRef, useMemo, useState, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
-// Category palette mapping to business intelligence dimensions
+// Category palette mapping for Dark Decision Intelligence (Primary: Red)
 const CATEGORY_COLORS = [
+  "#E63946", // Primary Red
+  "#FF3B30", // Bright Red
   "#10b981", // Revenue (Emerald)
-  "#06b6d4", // Growth (Cyan)
   "#f59e0b", // Demand (Amber)
   "#8b5cf6", // Customers (Violet)
-  "#6366f1", // Forecast (Indigo)
+  "#5E2025", // Dark Muted Red
 ];
 
 interface BusinessDataSceneProps {
@@ -267,13 +268,13 @@ export default function BusinessDataScene({ isTransitioning }: BusinessDataScene
         dpr={[1, 1.5]}
         gl={{ antialias: true, alpha: true }}
       >
-        <ambientLight intensity={0.8} />
-        <directionalLight position={[5, 8, 5]} intensity={1.2} />
-        <pointLight position={[-4, 3, -2]} intensity={0.6} color="#06b6d4" />
+        <ambientLight intensity={0.6} />
+        <directionalLight position={[5, 8, 5]} intensity={1.0} />
+        <pointLight position={[-4, 3, -2]} intensity={0.8} color="#E63946" />
 
         {/* Subtle Spatial Grid Floor */}
         <gridHelper
-          args={[16, 20, "#cbd5e1", "#e2e8f0"]}
+          args={[16, 20, "#252529", "#17181B"]}
           position={[0, -1.2, 0]}
         />
 

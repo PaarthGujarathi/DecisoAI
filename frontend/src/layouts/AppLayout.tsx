@@ -18,7 +18,7 @@ export default function AppLayout() {
   const theme = currentItem ? accentThemes[currentItem.color] : accentThemes.slate;
 
   return (
-    <div className={`flex h-screen overflow-hidden transition-colors duration-500 ${theme.surfaceBg}`}>
+    <div className={`flex h-screen overflow-hidden bg-[#080808] text-[#F5F5F5] transition-colors duration-500 ${theme.surfaceBg}`}>
       <Sidebar />
 
       <div className="flex flex-1 flex-col overflow-hidden">
