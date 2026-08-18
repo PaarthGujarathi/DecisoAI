@@ -21,7 +21,7 @@ export function useSidebar() {
   }, [collapsed]);
 
   const toggleSidebar = () =>
-    setCollapsed((prev) => !prev);
+    setCollapsed((prev: any) => !prev);
 
   return {
     collapsed,

@@ -21,8 +21,8 @@ export interface NavItem {
     | "emerald"
     | "violet"
     | "amber"
-    | "pink"
-    | "cyan"
+    | "rose"
+    | "indigo"
     | "orange"
     | "slate";
 }
@@ -71,16 +71,16 @@ export const navigation: NavItem[] = [
       "Receive AI-generated recommendations and actionable business insights.",
     icon: BrainCircuit,
     path: "/app/ai-insights",
-    color: "pink",
+    color: "rose",
   },
   {
-    id: "simulator",
-    label: "Decision Simulator",
+    id: "decision-intelligence",
+    label: "Decision Intelligence",
     description:
-      "Evaluate business scenarios and compare strategies before execution.",
+      "Explore simulations, AI-guided recommendations, and decision support workflows.",
     icon: FlaskConical,
-    path: "/app/simulator",
-    color: "cyan",
+    path: "/app/decision",
+    color: "indigo",
   },
   {
     id: "reports",
@@ -100,4 +100,4 @@ export const navigation: NavItem[] = [
     path: "/app/settings",
     color: "slate",
   },
-];
+];
