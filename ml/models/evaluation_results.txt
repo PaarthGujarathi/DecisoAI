@@ -1,0 +1,12 @@
+Best model: random_forest
+
+linear_regression
+MAE: 4.6947
+RMSE: 6.3927
+R2: 0.7858
+
+random_forest
+MAE: 4.5324
+RMSE: 5.9988
+R2: 0.8114
+
