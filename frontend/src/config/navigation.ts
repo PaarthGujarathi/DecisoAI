@@ -74,6 +74,8 @@ export const navigation: NavItem[] = [
     color: "rose",
   },
   {
+    id: "simulator",
+    label: "Decision Intelligence",
     id: "decision-intelligence",
     label: "Decision Intelligence",
     description:
@@ -100,4 +102,4 @@ export const navigation: NavItem[] = [
     path: "/app/settings",
     color: "slate",
   },
-];
+];
