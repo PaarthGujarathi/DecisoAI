@@ -3,6 +3,7 @@ from typing import Any
 
 
 class UploadResponse(BaseModel):
+    dataset_id: str
     filename: str
 
     rows: int
