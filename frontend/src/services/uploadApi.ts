@@ -15,6 +15,18 @@ export interface UploadResponse {
   quality: UploadQuality;
   preview: Record<string, unknown>[];
 }
+export interface UploadResponse {
+  dataset_id: string;
+  filename: string;
+  rows: number;
+  columns: number;
+  column_names: string[];
+  numeric_columns: string[];
+  categorical_columns: string[];
+  missing_values: Record<string, number>;
+  quality: UploadQuality;
+  preview: Record<string, unknown>[];
+}
 
 const API_BASE_URL = "http://localhost:8000";
 
@@ -44,7 +56,10 @@ export async function uploadDataset(file: File): Promise<UploadResponse> {
     }
 
     const data: UploadResponse = await response.json();
-    return data;
+
+localStorage.setItem("decisioai_dataset_id", data.dataset_id);
+
+return data;
   } catch (error: unknown) {
     if (error instanceof Error) {
       throw error;

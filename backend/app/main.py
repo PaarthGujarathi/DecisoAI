@@ -7,6 +7,7 @@ from app.api.upload import router as upload_router
 from app.api.analytics import router as analytics_router
 from app.api.simulation import router as simulation_router
 from app.api.ml import router as ml_router
+from app.api.datasets import router as datasets_router
 
 
 
@@ -33,3 +34,4 @@ app.include_router(upload_router)
 app.include_router(analytics_router)
 app.include_router(simulation_router)
 app.include_router(ml_router)
+app.include_router(datasets_router)

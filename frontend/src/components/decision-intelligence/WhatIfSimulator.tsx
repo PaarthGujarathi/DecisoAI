@@ -1,4 +1,5 @@
-import { FormEvent, useState } from "react";
+﻿import { useEffect, useState, type FormEvent } from "react";
+
 import {
   ArrowRight,
   CheckCircle2,
@@ -6,26 +7,141 @@ import {
   Play,
   TrendingUp,
 } from "lucide-react";
+
 import {
   simulateWhatIf,
   type WhatIfResponse,
 } from "../../services/mlApi";
 
+import {
+  getDatasetOptions,
+  getProductDetails,
+  type DatasetOptions,
+} from "../../services/datasetApi";
+
 function WhatIfSimulator() {
+  const [datasetId] = useState(
+    () => localStorage.getItem("decisioai_dataset_id") ?? ""
+  );
+
+  const [options, setOptions] = useState<DatasetOptions | null>(null);
+  const [loadingOptions, setLoadingOptions] = useState(true);
+  const [loadingDetails, setLoadingDetails] = useState(false);
+
   const [form, setForm] = useState({
-    product: "Laptop",
-    category: "Electronics",
-    current_cost: 520,
-    current_price: 850,
-    proposed_cost: 520,
-    proposed_price: 900,
-    region: "West",
-    month: "2025-12",
+    product: "",
+    category: "",
+    current_cost: 0,
+    current_price: 0,
+    proposed_cost: 0,
+    proposed_price: 0,
+    region: "",
+    month: "",
   });
 
   const [result, setResult] = useState<WhatIfResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  // Load options from the uploaded dataset.
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadOptions() {
+      setLoadingOptions(true);
+      setError("");
+
+      try {
+        if (!datasetId) {
+          throw new Error(
+            "No uploaded dataset found. Please upload a CSV first."
+          );
+        }
+
+        const data = await getDatasetOptions(datasetId);
+
+        if (cancelled) return;
+
+        setOptions(data);
+
+        const firstProduct = data.products[0] ?? "";
+        const firstRegion = data.regions[0] ?? "";
+
+        setForm((current) => ({
+          ...current,
+          product: firstProduct,
+          region: firstRegion,
+        }));
+      } catch (err) {
+        if (!cancelled) {
+          setError(
+            err instanceof Error
+              ? err.message
+              : "Unable to load dataset options."
+          );
+        }
+      } finally {
+        if (!cancelled) setLoadingOptions(false);
+      }
+    }
+
+    void loadOptions();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [datasetId]);
+
+  // Load actual values whenever the selected product or region changes.
+  useEffect(() => {
+    if (!datasetId || !options || !form.product || !form.region) {
+      return;
+    }
+
+    let cancelled = false;
+
+    async function loadProductDetails() {
+      setLoadingDetails(true);
+      setError("");
+      setResult(null);
+
+      try {
+        const details = await getProductDetails(
+          datasetId,
+          form.product,
+          form.region
+        );
+
+        if (cancelled) return;
+
+        setForm((current) => ({
+          ...current,
+          category: details.category,
+          current_cost: details.current_cost,
+          current_price: details.current_price,
+          proposed_cost: details.current_cost,
+          proposed_price: details.current_price,
+          month: details.month,
+        }));
+      } catch (err) {
+        if (!cancelled) {
+          setError(
+            err instanceof Error
+              ? err.message
+              : "Unable to load product details."
+          );
+        }
+      } finally {
+        if (!cancelled) setLoadingDetails(false);
+      }
+    }
+
+    void loadProductDetails();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [datasetId, options, form.product, form.region]);
 
   function updateField(
     field: keyof typeof form,
@@ -36,7 +152,6 @@ function WhatIfSimulator() {
       [field]: value,
     }));
   }
-
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
@@ -102,21 +217,29 @@ function WhatIfSimulator() {
 
           <div className="grid gap-5 md:grid-cols-2">
 
-            {/* Product */}
-            <div>
-              <label className={labelClass}>
-                Product
-              </label>
 
-              <input
-                value={form.product}
-                onChange={(e) =>
-                  updateField("product", e.target.value)
-                }
-                className={inputClass}
-                placeholder="e.g. Laptop"
-              />
-            </div>
+{/* Product */}
+<div>
+  <label className={labelClass}>
+    Product
+  </label>
+
+  {loadingOptions && (
+    <p className="mt-1 text-xs text-slate-500">
+      Loading dataset options...
+    </p>
+  )}
+
+  <input
+    value={form.product}
+    onChange={(e) =>
+      updateField("product", e.target.value)
+    }
+    className={inputClass}
+    placeholder="e.g. Laptop"
+  />
+</div>
+
 
             {/* Category */}
             <div>
@@ -134,30 +257,38 @@ function WhatIfSimulator() {
               />
             </div>
 
-            {/* Current Cost */}
-            <div>
-              <label className={labelClass}>
-                Current Cost
-              </label>
 
-              <div className="relative">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-slate-400">
-                  ₹
-                </span>
+{/* Current Cost */}
+<div>
+  <label className={labelClass}>
+    Current Cost
+  </label>
 
-                <input
-                  type="number"
-                  value={form.current_cost}
-                  onChange={(e) =>
-                    updateField(
-                      "current_cost",
-                      Number(e.target.value)
-                    )
-                  }
-                  className={`${inputClass} pl-9`}
-                />
-              </div>
-            </div>
+  {loadingDetails && (
+    <p className="mt-1 text-xs text-slate-500">
+      Loading product details...
+    </p>
+  )}
+
+  <div className="relative">
+    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-slate-400">
+      ₹
+    </span>
+
+    <input
+      type="number"
+      value={form.current_cost}
+      onChange={(e) =>
+        updateField(
+          "current_cost",
+          Number(e.target.value)
+        )
+      }
+      className={`${inputClass} pl-9`}
+    />
+  </div>
+</div>
+
 
             {/* Current Price */}
             <div>
@@ -167,7 +298,7 @@ function WhatIfSimulator() {
 
               <div className="relative">
                 <span className="absolute left-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-slate-400">
-                  ₹
+                  â‚¹
                 </span>
 
                 <input
@@ -205,7 +336,7 @@ function WhatIfSimulator() {
 
               <div className="relative">
                 <span className="absolute left-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-slate-400">
-                  ₹
+                  â‚¹
                 </span>
 
                 <input
@@ -230,7 +361,7 @@ function WhatIfSimulator() {
 
               <div className="relative">
                 <span className="absolute left-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-slate-400">
-                  ₹
+                  â‚¹
                 </span>
 
                 <input
@@ -352,18 +483,18 @@ function WhatIfSimulator() {
 
             <Metric
               label="Current Profit"
-              value={`₹${result.current_profit.toLocaleString()}`}
+              value={`â‚¹${result.current_profit.toLocaleString()}`}
             />
 
             <Metric
               label="Proposed Profit"
-              value={`₹${result.proposed_profit.toLocaleString()}`}
+              value={`â‚¹${result.proposed_profit.toLocaleString()}`}
               highlighted
             />
 
             <Metric
               label="Profit Change"
-              value={`₹${result.profit_change.toLocaleString()}`}
+              value={`â‚¹${result.profit_change.toLocaleString()}`}
               positive={result.profit_change > 0}
               negative={result.profit_change < 0}
             />
@@ -425,14 +556,14 @@ function WhatIfSimulator() {
 
               <Metric
                 label="Revenue Change"
-                value={`₹${result.revenue_change.toLocaleString()}`}
+                value={`â‚¹${result.revenue_change.toLocaleString()}`}
                 positive={result.revenue_change > 0}
                 negative={result.revenue_change < 0}
               />
 
               <Metric
                 label="Proposed Revenue"
-                value={`₹${result.proposed_revenue.toLocaleString()}`}
+                value={`â‚¹${result.proposed_revenue.toLocaleString()}`}
               />
 
             </div>
